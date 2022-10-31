@@ -5,6 +5,16 @@ function api_user_post($request) {
     $username = sanitize_text_field($request['username']);
     $password = $request['password'];
 
+    if(empty($email)|| empty($username) || empty($password) ){
+        $response = new WP_Error('error', 'email or username or password invalid', ['status' => 406]);
+        return rest_ensure_response($response);
+    }
+
+    if(username_exists($username)|| email_exists($email)){
+        $response = new WP_Error('error', 'username or email already registered', ['status' => 403]);
+        return rest_ensure_response($response);
+    }
+
    $response = wp_insert_user([
         'user_login' => $username,
         'user_email' => $email,
