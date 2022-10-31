@@ -1,11 +1,16 @@
 <?php 
 
 function api_user_post($request) {
+    $email = $request['email'];
+    $username = $request['username'];
+    $password = $request['password'];
 
-    $response = [
-        'ID' => '2',
-        'user_login' => 'gustavo souza'
-    ];
+   $response = wp_insert_user([
+        'user_login' => $username,
+        'user_email' => $email,
+        'user_pass' => $password,
+        'role' => 'subscriber'
+    ]);
 
     return rest_ensure_response($response);
 }
