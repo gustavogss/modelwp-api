@@ -1,8 +1,8 @@
 <?php 
 
 function api_user_post($request) {
-    $email = $request['email'];
-    $username = $request['username'];
+    $email = sanitize_email($request['email']);
+    $username = sanitize_text_field($request['username']);
     $password = $request['password'];
 
    $response = wp_insert_user([
